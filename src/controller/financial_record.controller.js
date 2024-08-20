@@ -27,4 +27,14 @@ const create = async (req, res) => {
     })
 }
 
-module.exports = {create}
+const findAll = async (req, res) => {
+    const records = await recordService.findAllRecord();
+
+    if(records.lenth === 0){
+       return res.status(400).send({message: 'Nenhum registo encontrado'})
+    }
+
+    res.status(200).send(records);
+}
+
+module.exports = {create, findAll}
