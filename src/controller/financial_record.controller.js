@@ -57,33 +57,45 @@ const findById =  async (req, res) => {
 const update = async (req, res) => {
     const {description, registration_date, type, registration_value, registration_status} = req.body;
 
+
     if(!description && !registration_date && !type && !registration_value && !registration_status){
         res.status(400).send("Pelo menos um dos campos deve ser atualizado para a atualização");
     }
 
+
     const id = req.params.id;
+
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).send({message: 'O id não é valido'})
     }
 
+
     const user = recordService.findById(id);
+
 
     if(!user){
         res.status(4000).send({message: 'O usuario não existe'})
     }
 
+
     await recordService.update(
-        id, description, 
-        registration_date, 
-        type, 
-        registration_value, 
+        id, 
+        description,
+        registration_date,
+        type,
+        registration_value,
         registration_status
     );
+
 
     res.status(201).send({message: 'Registro atualizado com sucesso'});
 
 
+
 }
 
-module.exports = {create, findAll, findById}
+
+
+
+module.exports = {create, findAll, findById, update}
