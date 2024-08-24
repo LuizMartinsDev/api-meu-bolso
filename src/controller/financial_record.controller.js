@@ -35,23 +35,14 @@ const findAll = async (req, res) => {
        return res.status(400).send({message: 'Nenhum registo encontrado'})
     }
 
+
     res.status(200).send(records);
 }
 
 const findById =  async (req, res) => {
-    const id = req.params.id;
+    const record = req.record;
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        res.status(400).send({message: 'O id não é valido'})
-    }
-
-    const user = await recordService.findById(id);
-
-    if(!user){
-        res.status(4000).send({message: 'O usuario não existe'})
-    }
-
-    res.status(200).send(user);
+    res.status(200).send(record);
 }
 
 const update = async (req, res) => {
@@ -63,21 +54,7 @@ const update = async (req, res) => {
     }
 
 
-    const id = req.params.id;
-
-
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        res.status(400).send({message: 'O id não é valido'})
-    }
-
-
-    const user = recordService.findById(id);
-
-
-    if(!user){
-        res.status(4000).send({message: 'O usuario não existe'})
-    }
-
+    const id = req.id;
 
     await recordService.update(
         id, 
@@ -92,22 +69,10 @@ const update = async (req, res) => {
     res.status(201).send({message: 'Registro atualizado com sucesso'});
 
 
-
 }
 
 const deleteRecord = async (req, res) => {
-    const id = req.params.id;
-
-    
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        res.status(400).send({message: 'O id não é valido'})
-    }
-
-    const user = await recordService.findById(id);
-
-    if(!user){
-        res.status(4000).send({message: 'O usuario não existe'})
-    }
+    const id = req.id;
 
     await recordService.deleteRecord(id);
 
