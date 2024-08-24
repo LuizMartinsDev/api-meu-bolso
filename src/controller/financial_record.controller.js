@@ -95,7 +95,27 @@ const update = async (req, res) => {
 
 }
 
+const deleteRecord = async (req, res) => {
+    const id = req.params.id;
+
+    
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        res.status(400).send({message: 'O id não é valido'})
+    }
+
+    const user = await recordService.findById(id);
+
+    if(!user){
+        res.status(4000).send({message: 'O usuario não existe'})
+    }
+
+    await recordService.deleteRecord(id);
+
+    res.status(200).send({message: "Registro excluido com sucesso!"})
+
+}
 
 
 
-module.exports = {create, findAll, findById, update}
+
+module.exports = {create, findAll, findById, update, deleteRecord}
